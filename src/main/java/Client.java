@@ -4,12 +4,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
 import java.net.Socket;
-import java.time.Clock;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalField;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 
 public class Client {
@@ -17,9 +12,17 @@ public class Client {
     public static final List<NMQ> nmqConfigs = List.of(new NMQ(32, 145, 10));
 
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        String host = "";
+        int port = 0;
+        for (int i = 0; i < args.length; ++i) {
+            host = args[0];
+            port = Integer.parseInt(args[1]);
+        }
+
         System.out.println("[DEV] Client has been started!");
 
-        Socket socket = new Socket("127.0.0.1", 12332); // todo - move to cli arguments
+        Socket socket = new Socket(host, port); // todo - move to cli arguments
         socket.setTcpNoDelay(true);
         OutputStream requestWriter = socket.getOutputStream();
         Scanner responseListener = new Scanner(socket.getInputStream());

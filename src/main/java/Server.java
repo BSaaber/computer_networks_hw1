@@ -14,7 +14,12 @@ public class Server {
     public static void main(String[] args) throws IOException {
         System.out.println("[DEV] Server has been started!");
 
-        ServerSocket serverSocket = new ServerSocket(12332);
+        int port = 0;
+        for (int i = 0; i < args.length; ++i) {
+            port = Integer.parseInt(args[0]);
+        }
+
+        ServerSocket serverSocket = new ServerSocket(port);
         Socket socket = serverSocket.accept();
         Scanner requestListener = new Scanner(socket.getInputStream());
         PrintWriter replier = new PrintWriter(socket.getOutputStream());
